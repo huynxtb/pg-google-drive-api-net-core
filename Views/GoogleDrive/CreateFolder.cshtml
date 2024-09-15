@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Google Drive API ASP.NET Core | ProG Coder</h1>
+    <p>Xem thêm nhiều bài viết hay tại <a target="_blank" href="https://progcoder.com">ProG Coder</a>.</p>
+    <p><a target="_blank" href="https://progcoder.com">Hướng dẫn sử dụng tại đây</a>.</p>
+
+    <div class="container">
+        
+        @await Html.PartialAsync("_ButtonActionPartial")
+        
+        <h1 id="txt-title">Upload File</h1>
+        <h3 id="txt-error" class="text-danger"></h3>
+        
+        <form action="/GoogleDrive/SubmitCreateFolder" method="POST">
+            <label for="FolderName">Folder Name: </label>
+            <input class="form-control" type="text" id="FolderName" name="folderName"/>
+            <br/>
+            <br/>
+            <button type="submit" class="btn btn-success">Create</button>
+        </form>
+    </div>
+</div>
+
+<script>
+if (getParameterByName('folderName')){
+    $('#txt-error').text('Folder Name ' + getParameterByName('folderName') + ' is already existed.');
+}
+
+function getParameterByName(name) {
+  let url = window.location.href;
+  name = name.replace(/[[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  const results = regex.exec(url);
+  
+  if (!results) return null;
+  if (!results[2]) return '';
+  
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+</script>

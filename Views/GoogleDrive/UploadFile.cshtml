@@ -1,0 +1,35 @@
+﻿@model GoogleDriveFolderModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Google Drive API ASP.NET Core | ProG Coder</h1>
+    <p>Xem thêm nhiều bài viết hay tại <a target="_blank" href="https://progcoder.com">ProG Coder</a>.</p>
+    <p><a target="_blank" href="https://progcoder.com">Hướng dẫn sử dụng tại đây</a>.</p>
+
+    <div class="container">
+        
+        @await Html.PartialAsync("_ButtonActionPartial")
+        
+        <h1 id="txt-title">Upload File</h1>
+        
+        <form action="/GoogleDrive/SubmitUploadFile" method="POST" enctype="multipart/form-data">
+            <label for="FileUpload">File: </label>
+            <input class="form-control" type="file" id="FileUpload" name="fileUpload"/>
+            <br/>
+            
+            <label for="FolderId">Folder: </label>
+            <select class="form-control" id="FolderId" name="folderId">
+                @foreach (var item in Model.Files)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <br/>
+            <br/>
+            <button type="submit" class="btn btn-success">Upload</button>
+        </form>
+    </div>
+</div>

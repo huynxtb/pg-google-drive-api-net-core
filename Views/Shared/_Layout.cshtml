@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ProG Coder</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ImportExcelToDatabase.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" id="theme-styles">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <style>
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    #customers td, #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    #customers tr:nth-child(even){background-color: #f2f2f2;}
+    
+    #customers tr:hover {background-color: #ddd;}
+    
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+    }
+    </style>
+    <script>
+
+        // setTimeout(function(){
+        //     Swal.fire({
+        //         title: '<img src="https://www.progcoder.com/lib/image/ProGCoder_5.png" style="width:250px;"/>',
+        //         html:
+        //             '<h3>Hey Bro! Do you like ProG Coder?</h3></br>' +
+        //             '<a target="_blank" onclick="closeSwal()" href="https://www.progcoder.com">Yes! Very Like</a></br>' +
+        //             '<a target="_blank" onclick="closeSwal()" href="https://www.progcoder.com">Ohm!!! A little bit.</a> ',
+        //         allowOutsideClick: false,
+        //     });
+        //     setTimeout(function () {
+        //         $('.swal2-confirm.swal2-styled').hide();
+        //     }, 500);
+        // }, 2000);
+
+        function closeSwal() {
+            $('.swal2-confirm.swal2-styled').click();
+        }
+
+        function showLoading(msg){
+            Swal.fire({
+                title: '<img src="https://www.progcoder.com/lib/image/ProGCoder_5.png" style="width:250px;"/>',
+                html: msg,
+                timerProgressBar: true,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading()
+                }
+            });
+        }
+
+        function showAlertMessage(msg) {
+            Swal.fire({
+                title: '<img src="https://www.progcoder.com/lib/image/ProGCoder_5.png" style="width:250px;"/>',
+                text: msg,
+                allowOutsideClick: false,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            })
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="https://www.progcoder.com" target="_blank">
+                    <img src="https://www.progcoder.com/lib/image/ProGCoder_5.png" style="width:250px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" target="_blank" href="https://www.progcoder.com">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" target="_blank" href="https://www.progcoder.com">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - ProG Coder - <a target="_blank" href="https://www.progcoder.com">ProG Coder</a>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

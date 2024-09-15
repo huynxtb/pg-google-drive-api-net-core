@@ -1,0 +1,89 @@
+﻿@model GoogleDriveFileModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Google Drive API ASP.NET Core | ProG Coder</h1>
+    <p>Xem thêm nhiều bài viết hay tại <a target="_blank" href="https://progcoder.com">ProG Coder</a>.</p>
+    <p><a target="_blank" href="https://progcoder.com">Hướng dẫn sử dụng tại đây</a>.</p>
+
+    <div class="container">
+        
+        @await Html.PartialAsync("_ButtonActionPartial")
+        
+        <h1 id="txt-title">All File</h1>
+        
+        <table id="customers">
+            <tr>
+                <th>
+                    File ID
+                </th>
+                <th>
+                    File Name
+                </th>
+                <th>
+                    Created At
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+            @foreach (var item in Model.Files)
+            {
+                <tr>
+                    <td>
+                        @item.Id
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.CreatedTime.ToString("dd/MM/yyyy hh:mm tt")
+                    </td>
+                    <td>
+                        <a type="button" href="/GoogleDrive/Download?fieldId=@item.Id&fileName=@item.Name" class="btn btn-warning">Download</a><br><br>
+                        <a type="button" href="/GoogleDrive/GetShareLink?fieldId=@item.Id" class="btn btn-info">Get Share Link</a><br><br>
+                        <a type="button" href="/GoogleDrive/RevokeShareLink?fieldId=@item.Id&redirectUri=/GoogleDrive/FileManagement" class="btn btn-secondary">Revoke Share Link</a><br><br>
+                        <button type="button" field-id="@item.Id" class="btn btn-danger btn-delete">Delete</button>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+
+$('.btn-delete').on('click', function(e) {
+  e.preventDefault();
+  let fieldId = $(this).attr('field-id');
+  $.ajax({
+      url: '/GoogleDrive/Delete?fieldId=' + fieldId,
+      method: 'DELETE',
+      success: function(data) {
+          window.location.reload();
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+          console.error('Error:', errorThrown);
+      }
+  });
+})
+
+if (window.location.pathname==='/GoogleDrive/GetFileByFolderId'){
+    $('#txt-title').text('All File In Folder: ' + getParameterByName('folderName'));
+}
+
+function getParameterByName(name) {
+  let url = window.location.href;
+  name = name.replace(/[[\]]/g, '\\$&');
+  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  const results = regex.exec(url);
+  
+  if (!results) return null;
+  if (!results[2]) return '';
+  
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+</script>
